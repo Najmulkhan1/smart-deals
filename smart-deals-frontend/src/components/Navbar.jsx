@@ -3,8 +3,8 @@ import { CiMenuFries } from "react-icons/ci";
 import { IoIosClose } from "react-icons/io";
 import { Link, NavLink } from "react-router";
 import MyLink from "./Mylink";
-import { AuthContext } from "../provider/AuthProvider";
 import image1 from "../assets/img1.jpg";
+import { AuthContext } from "../provider/AuthContext";
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -88,6 +88,9 @@ const Navbar = () => {
             </li>
             <li className="hover:bg-amber-100 hover:text-black rounded p-1">
               <MyLink to={"/about"}>About</MyLink>
+            </li>
+            <li className="hover:bg-amber-100 hover:text-black rounded p-1">
+              <MyLink to={"/create-product"}>Create Product</MyLink>
             </li>
           </ul>
         </div>

@@ -1,12 +1,14 @@
 import React, { Suspense, use } from "react";
-import { Link, useNavigate } from "react-router";
-import { AuthContext } from "../provider/AuthProvider";
+import { Link, useLocation, useNavigate } from "react-router";
+import { AuthContext } from "../provider/AuthContext";
 
 const Register = () => {
-  const { createUser, updateUser,setUser } = use(AuthContext);
+  const { createUser, updateUser, setUser, googleLogin } = use(AuthContext);
 
   const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
   const navigate = useNavigate();
+
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,13 +31,32 @@ const Register = () => {
         const user = userCredential.user;
         updateUser({ displayName: name, photoURL: url })
           .then(() => {
-            setUser({...user, displayName: name, photoURL: url})
+            setUser({ ...user, displayName: name, photoURL: url });
+
+            const newUser = {
+              name: user.displayName,
+              email: user.email,
+              image: user.photoURL
+            }
+
+            console.log(newUser);
+            
+
+            // data save to db
+            fetch("http://localhost:3000/users", {
+              method: "post",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(newUser),
+            }).then((res) => res.json());
           })
           .catch((error) => {
             console.error("Error updating profile:", error);
           });
         console.log(user);
-        navigate("/");
+
+        navigate(location.state || "/");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -44,6 +65,18 @@ const Register = () => {
       });
 
     console.log(name, email, url, password);
+  };
+
+  const handleGoogleLogin = () => {
+    console.log("Click");
+    googleLogin()
+      .then((result) => {
+        console.log(result.user);
+        navigate(location.state || "/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -114,7 +147,10 @@ const Register = () => {
 
           <div className="p-4">
             {/* Google */}
-            <button className="btn bg-white text-black w-full shadow border-[#e5e5e5]">
+            <button
+              onClick={handleGoogleLogin}
+              className="btn bg-white text-black w-full shadow border-[#e5e5e5]"
+            >
               <svg
                 aria-label="Google logo"
                 width="16"
