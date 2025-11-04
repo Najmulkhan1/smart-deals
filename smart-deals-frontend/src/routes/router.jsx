@@ -9,6 +9,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import PrivetRoute from "../provider/PrivetRoute";
 import CreateProduct from "../pages/CreateProduct";
 import ProductDetails from "../components/ProductDetails";
+import MyBids from "../pages/MyBids";
 
 const router = createBrowserRouter([
     {
@@ -51,8 +52,12 @@ const router = createBrowserRouter([
             },
             {
                 path: "product-details/:id",
-                loader: ({params}) =>  fetch(`http://localhost:3000/products/${params}`),
+                loader: ({params}) =>  fetch(`http://localhost:3000/products/${params.id}`),
                 element: <ProductDetails></ProductDetails>
+            },
+            {
+                path: "my-bids",
+                element: <MyBids></MyBids>
             }
         ],
 

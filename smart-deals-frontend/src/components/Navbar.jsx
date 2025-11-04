@@ -87,7 +87,7 @@ const Navbar = () => {
               <MyLink to={"/all-products"}>All Product</MyLink>
             </li>
             <li className="hover:bg-amber-100 hover:text-black rounded p-1">
-              <MyLink to={"/about"}>About</MyLink>
+              <MyLink to={"/my-bids"}>My Bids</MyLink>
             </li>
             <li className="hover:bg-amber-100 hover:text-black rounded p-1">
               <MyLink to={"/create-product"}>Create Product</MyLink>

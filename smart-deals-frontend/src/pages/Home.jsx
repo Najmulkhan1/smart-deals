@@ -7,7 +7,7 @@ const Home = () => {
   ).then((res) => res.json());
 
   return (
-    <div>
+    <div className="w-11/12 mx-auto">
       <Suspense>
         <LatestProducts
           latestProductPromise={latestProductPromise}
